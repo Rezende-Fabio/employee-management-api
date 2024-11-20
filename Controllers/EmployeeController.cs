@@ -14,9 +14,21 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllEmployees(){
-        var respService = await _employeeService.GetAllEmployees();
-        return Ok(respService);
+    public async Task<IActionResult> GetAllEmployees()
+    {
+        try
+        {
+            var respService = await _employeeService.GetAllEmployees();
+            return Ok(respService);
+        }
+        catch (Exception)
+        {
+            return Problem(
+                    statusCode: 500,
+                    title: "Erro interno do servidor"
+                );
+        }
+
     }
 
 }

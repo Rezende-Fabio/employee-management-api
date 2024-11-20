@@ -69,3 +69,6 @@ Thumbs.db
 *.fail
 *.shm
 *.wal
+
+# Banco de dados
+dbEmployee.db

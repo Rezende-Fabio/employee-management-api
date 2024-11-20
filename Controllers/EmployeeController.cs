@@ -25,7 +25,30 @@ public class EmployeeController : ControllerBase
         {
             return Problem(
                     statusCode: 500,
-                    title: "Erro interno do servidor"
+                    title: "Server Error"
+                );
+        }
+
+    }
+
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<IActionResult> GetEmployeeById([FromRoute] int id)
+    {
+        try
+        {
+            var respService = await _employeeService.GetEmployeeById(id);
+            return Ok(respService);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception)
+        {
+            return Problem(
+                    statusCode: 500,
+                    title: "Server Error"
                 );
         }
 

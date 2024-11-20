@@ -15,15 +15,19 @@ public class EmployeeService : IEmployeeCrud
 
     async Task<List<EmployeeEntity>> IEmployeeCrud.GetAllEmployees()
     {
-        try
+        var employees = await _context.Employees.AsNoTracking().ToListAsync();
+        return employees;
+    }
+
+    async Task<EmployeeEntity> IEmployeeCrud.GetEmployeeById(int id)
+    {
+        var employee = await _context.Employees.AsNoTracking().FirstOrDefaultAsync(e => e.EmployeeEntityId == id);
+
+        if (employee == null)
         {
-            var employees = await _context.Employees.AsNoTracking().ToListAsync();
-            return employees;
-        }
-        catch (Exception ex)
-        {
-            throw new Exception(ex.Message);
+            throw new KeyNotFoundException($"Employee id {id} was not found");
         }
 
+        return employee;
     }
 }

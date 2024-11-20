@@ -15,6 +15,8 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(typeof(List<EmployeeDto>), 201)]
+    [ProducesResponseType(500)]
     public async Task<IActionResult> GetAllEmployees()
     {
         try
@@ -33,6 +35,9 @@ public class EmployeeController : ControllerBase
 
     [HttpGet]
     [Route("{id}")]
+    [ProducesResponseType(typeof(EmployeeDto), 201)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(500)]
     public async Task<IActionResult> GetEmployeeById([FromRoute] int id)
     {
         try
@@ -54,6 +59,9 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(typeof(EmployeeDto), 201)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(500)]
     public async Task<IActionResult> CreateEmployee([FromBody] CreateEmployeeDto employee)
     {
         try

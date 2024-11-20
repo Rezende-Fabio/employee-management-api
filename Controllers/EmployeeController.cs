@@ -20,7 +20,7 @@ public class EmployeeController : ControllerBase
         try
         {
             var respService = await _employeeService.GetAllEmployees();
-            return Ok(respService);
+            return Ok(respService.Select(e => new EmployeeDto(e)).ToList());
         }
         catch (Exception)
         {
@@ -38,7 +38,7 @@ public class EmployeeController : ControllerBase
         try
         {
             var respService = await _employeeService.GetEmployeeById(id);
-            return Ok(respService);
+            return Ok(new EmployeeDto(respService));
         }
         catch (KeyNotFoundException ex)
         {
@@ -60,9 +60,9 @@ public class EmployeeController : ControllerBase
         {
             if (!ModelState.IsValid)
                 BadRequest();
-            
+
             var respService = await _employeeService.CreateEmployee(employee);
-            return Created($"v1/employees/{respService.EmployeeEntityId}", respService);
+            return Created($"v1/employees/{respService.EmployeeEntityId}", new EmployeeDto(respService));
         }
         catch (ArgumentException ex)
         {

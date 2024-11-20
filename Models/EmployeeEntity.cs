@@ -11,9 +11,9 @@ public class EmployeeEntity {
     [MaxLength(65)]
     public string NomeCompleto { get; set; }
 
-    public DepartamentsEnum Departamento { get; set; }
+    public DepartmentsEnum Departamento { get; set; }
 
-    public ShiftsEnum Truno { get; set; }
+    public ShiftsEnum Turno { get; set; }
 
     public DateTime DataCriacao { get; set; } = DateTime.Now.ToLocalTime();
 

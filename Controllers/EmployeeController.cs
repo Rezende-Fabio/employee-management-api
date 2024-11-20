@@ -1,3 +1,4 @@
+using employee_management_api.Dtos;
 using employee_management_api.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +29,6 @@ public class EmployeeController : ControllerBase
                     title: "Server Error"
                 );
         }
-
     }
 
     [HttpGet]
@@ -51,7 +51,30 @@ public class EmployeeController : ControllerBase
                     title: "Server Error"
                 );
         }
+    }
 
+    [HttpPost]
+    public async Task<IActionResult> CreateEmployee([FromBody] CreateEmployeeDto employee)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+                BadRequest();
+            
+            var respService = await _employeeService.CreateEmployee(employee);
+            return Created($"v1/employees/{respService.EmployeeEntityId}", respService);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception)
+        {
+            return Problem(
+                    statusCode: 500,
+                    title: "Server Error"
+                );
+        }
     }
 
 }

@@ -1,6 +1,9 @@
+using System.Text.Json.Serialization;
+
 namespace employee_management_api.Enums;
 
-public enum DepartamentsEnum
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum DepartmentsEnum
 {
     RH,
     TI,

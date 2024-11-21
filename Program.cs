@@ -1,3 +1,8 @@
+using employee_management_api.Context;
+using employee_management_api.Interfaces;
+using employee_management_api.Services;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// relacionando as interfaces aos service
+builder.Services.AddScoped<IEmployeeCrud, EmployeeService>();
 
 var app = builder.Build();
 

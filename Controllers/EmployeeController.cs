@@ -59,7 +59,7 @@ public class EmployeeController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(typeof(EmployeeDto), 201)]
+    [ProducesResponseType(typeof(CreateEmployeeDto), 201)]
     [ProducesResponseType(400)]
     [ProducesResponseType(500)]
     public async Task<IActionResult> CreateEmployee([FromBody] CreateEmployeeDto employee)
@@ -75,6 +75,38 @@ public class EmployeeController : ControllerBase
         catch (ArgumentException ex)
         {
             return BadRequest(ex.Message);
+        }
+        catch (Exception)
+        {
+            return Problem(
+                    statusCode: 500,
+                    title: "Server Error"
+                );
+        }
+    }
+
+    [HttpPatch]
+    [Route("{id}")]
+    [ProducesResponseType(typeof(UpdateEmployeeDto), 201)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(500)]
+    public async Task<IActionResult> UpdateEmployee([FromBody] UpdateEmployeeDto employee, [FromRoute] int id)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+                BadRequest();
+
+            var respService = await _employeeService.UpdateEmployee(employee, id);
+            return Ok(new EmployeeDto(respService));
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
         }
         catch (Exception)
         {

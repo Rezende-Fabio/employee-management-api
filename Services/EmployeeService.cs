@@ -17,13 +17,20 @@ public class EmployeeService : IEmployeeCrud
 
     public async Task<List<EmployeeEntity>> GetAllEmployees()
     {
-        var employees = await _context.Employees.AsNoTracking().ToListAsync();
+        var employees = await _context.Employees
+            .AsNoTracking()
+            .Where(e => !e.Delete)
+            .ToListAsync();
+            
         return employees;
     }
 
     public async Task<EmployeeEntity> GetEmployeeById(int id)
     {
-        var employee = await _context.Employees.AsNoTracking().FirstOrDefaultAsync(e => e.EmployeeEntityId == id);
+        var employee = await _context.Employees
+            .AsNoTracking()
+            .Where(e => e.EmployeeEntityId == id && !e.Delete)
+            .FirstOrDefaultAsync();
 
         if (employee == null)
             throw new KeyNotFoundException($"Employee id {id} was not found");

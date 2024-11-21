@@ -8,4 +8,5 @@ public interface IEmployeeCrud{
     Task<EmployeeEntity> GetEmployeeById(int id);
     Task<EmployeeEntity> CreateEmployee(CreateEmployeeDto employee);
     Task<EmployeeEntity> UpdateEmployee(UpdateEmployeeDto employee, int id);
+    Task<EmployeeEntity> DeleteEmployee(int id);
 }

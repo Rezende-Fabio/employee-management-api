@@ -82,4 +82,23 @@ public class EmployeeService : IEmployeeCrud
             throw;
         }
     }
+
+    public async Task<EmployeeEntity> DeleteEmployee(int id)
+    {
+        try
+        {
+            var employee = await GetEmployeeById(id);
+            employee.Delete = true;
+            employee.DataAlteracao = DateTime.Now.ToLocalTime();
+
+            _context.Employees.Update(employee);
+            await _context.SaveChangesAsync();
+
+            return employee;
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
 }

@@ -117,4 +117,27 @@ public class EmployeeController : ControllerBase
         }
     }
 
+    [HttpDelete]
+    [Route("{id}")]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(500)]
+    public async Task<IActionResult> DeleteEmployee([FromRoute] int id)
+    {
+        try
+        {
+            var respService = await _employeeService.DeleteEmployee(id);
+            return Ok(new EmployeeDto(respService));
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (Exception)
+        {
+            return Problem(
+                    statusCode: 500,
+                    title: "Server Error"
+                );
+        }
+    }
 }

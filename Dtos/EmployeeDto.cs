@@ -7,10 +7,13 @@ public class EmployeeDto
 {
     public EmployeeDto(EmployeeEntity employee)
     {
+        Id = employee.EmployeeEntityId;
         NomeCompleto = employee.NomeCompleto;
         Departamento = employee.Departamento;
         Turno = employee.Turno;
     }
+
+    public int Id { get; set; }
 
     public string NomeCompleto { get; set; }
 

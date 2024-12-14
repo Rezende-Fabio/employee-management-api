@@ -37,7 +37,7 @@ project.lock.json
 project.fragment.lock.json
 
 # Arquivos de configuração do sistema
-appsettings*.json
+appsettings.json
 .env
 
 # Arquivos do Entity Framework

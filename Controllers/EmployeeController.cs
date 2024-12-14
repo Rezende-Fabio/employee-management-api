@@ -85,7 +85,7 @@ public class EmployeeController : ControllerBase
         }
     }
 
-    [HttpPatch]
+    [HttpPut]
     [Route("{id}")]
     [ProducesResponseType(typeof(UpdateEmployeeDto), 201)]
     [ProducesResponseType(400)]
